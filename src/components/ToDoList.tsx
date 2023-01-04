@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { useForm } from "react-hook-form";
 import { atom, useRecoilState, useRecoilValue, useSetRecoilState } from "recoil";
-import { toDoState } from "./atoms";
+import { toDoSelector, toDoState } from "./atoms";
 import CreateToDo from "./Create/CreateToDo";
 import ToDo from "./Create/List/ToDo";
 /*
@@ -32,21 +32,26 @@ function ToDoList() {
 
   //const [toDos, setToDos] = useRecoilState(toDoState)
   const toDos = useRecoilValue(toDoState)
-  console.log(toDos);
+  //console.log(toDos);
 
 {/*
   const onSubmit = ({toDo}:IForm) => {
     //console.log('add to do', data.toDo);
     setValue("toDo", "")
     setToDos(oldToDos => [{text:toDo, category: "TODO", id: Date.now()}, ...oldToDos])
-  };
-  console.log(toDos); */}
-    
+  };*/}
+
+  //const selectoreOutPut = useRecoilValue(toDoSelector);
+  //console.log(selectoreOutPut);
+
+  const [toDo, doing, done] = useRecoilValue(toDoSelector);
+  
   return (
     <div>
       <h1>To Do</h1>
-        <hr />
-        <CreateToDo />
+      <hr />
+      <CreateToDo />
+
         {/*
         <form
           onSubmit={handleSubmit(onSubmit)}
@@ -59,12 +64,35 @@ function ToDoList() {
         />
         <button>Add</button>
         </form> */}
-      <ul>
+      {/*<ul>
         {toDos.map(toDo => 
           <ToDo key={toDo.id} {...toDo} /> 
           //<ToDo text={toDo.text} category={toDo.category} id={toDo.id} />
         )}
+        </ul> */}
+
+      <h2>TODO</h2>
+      <ul>
+        {toDo.map(toDo => 
+          <ToDo key={toDo.id} {...toDo} /> 
+        )}
       </ul>
+      <hr/>
+      <h2>DOING</h2>
+      <ul>
+        {doing.map(toDo => 
+          <ToDo key={toDo.id} {...toDo} /> 
+        )}
+      </ul>
+      <hr />
+      <h2>DONE</h2>
+      <ul>
+        {done.map(toDo => 
+          <ToDo key={toDo.id} {...toDo} /> 
+        )}
+      </ul>
+      <hr />
+
     </div>
   );
 }
