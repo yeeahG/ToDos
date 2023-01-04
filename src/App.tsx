@@ -5,10 +5,14 @@ import { toDoState } from "./components/Model/atoms";
 import DragCard from "./components/Card/DragCard";
 import Board from "./components/Board/Board";
 
+const BigBox = styled.div`
+  width: 100%;
+  padding-top: 20px;
+  position: relative;
+`;
+
 const Wrapper = styled.div`
   display: flex;
-  width: 90vw;
-  height: 100vh;
   margin: 0 auto;
   justify-content: center;
   align-items: center;
@@ -62,21 +66,24 @@ function App() {
     
   };
   return (
-    <DragDropContext onDragEnd={onDragEnd}>
-      <Wrapper>
-        <Boards>
-          {Object.keys(toDos).map(
-              (boardId) => (
-                <Board 
-                  boardId={boardId} 
-                  key={boardId}
-                  toDos={toDos[boardId]}
-                />
-              )
-            )}
-        </Boards>
-      </Wrapper>
-    </DragDropContext>
+    <BigBox>
+      <h1>Write my To Do</h1>
+      <DragDropContext onDragEnd={onDragEnd}>
+        <Wrapper>
+          <Boards>
+            {Object.keys(toDos).map(
+                (boardId) => (
+                  <Board 
+                    boardId={boardId} 
+                    key={boardId}
+                    toDos={toDos[boardId]}
+                  />
+                )
+              )}
+          </Boards>
+        </Wrapper>
+      </DragDropContext>
+    </BigBox>
   );
 }
 
