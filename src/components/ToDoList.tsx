@@ -60,7 +60,7 @@ function ToDoList() {
         </form> */}
       <ul>
         {toDos.map(toDo => 
-          <ToDo {...toDo} /> 
+          <ToDo key={toDo.id} {...toDo} /> 
           //<ToDo text={toDo.text} category={toDo.category} id={toDo.id} />
         )}
       </ul>
