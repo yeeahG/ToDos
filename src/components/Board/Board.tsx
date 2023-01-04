@@ -9,14 +9,35 @@ const Wrapper = styled.div`
   border-radius: 5px;
   min-height: 300px;
   width: 300px;
+  disply: flex;
+  flex-direction: column;
 `;
 
-const Title = styled.div`
-    font-size: 24px;
+const Title = styled.h2`
+    font-size: 20px;
     font-weight: 500;
     text-align: center;
     background-color: inherit;
     color: #FFFACD;
+`;
+
+interface IBoxProps {
+    isDraggingOver: boolean;
+    isDraggingFromThis: boolean;
+}
+
+const Box = styled.div<IBoxProps>`
+    padding: 5px;
+    border-radius: 10px;
+    background-color: ${props => 
+        props.isDraggingOver ? 
+            "#2F4F4F" 
+            : 
+                props.isDraggingFromThis ? "#DCDCDC" : 
+            "transparent"
+        };
+    flex-grow: 1;
+    transition: background-color 0.3s ease-in-out;
 `;
 
 interface IBoardProps {
@@ -29,8 +50,10 @@ function Board( {toDos, boardId}:IBoardProps ) {
     <Wrapper>
         <Title>{boardId}</Title>
         <Droppable droppableId={boardId}>
-        {(provided) => 
-            <div 
+        {(provided, snapshot) => 
+            <Box 
+                isDraggingOver={snapshot.isDraggingOver}
+                isDraggingFromThis={Boolean(snapshot.draggingFromThisWith)}
                 ref={provided.innerRef} 
                 {...provided.droppableProps}
             >
@@ -39,7 +62,7 @@ function Board( {toDos, boardId}:IBoardProps ) {
                 )
                 )}
                 {provided.placeholder}
-            </div>
+            </Box>
         }
     </Droppable>
     </Wrapper>

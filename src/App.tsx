@@ -7,7 +7,7 @@ import Board from "./components/Board/Board";
 
 const Wrapper = styled.div`
   display: flex;
-  width: 100%;
+  width: 90vw;
   height: 100vh;
   margin: 0 auto;
   justify-content: center;
@@ -18,9 +18,9 @@ const Boards = styled.div`
   display: flex;
   gap: 10px;
   width: 100%;
-  padding-top: 10px;
   justify-content: center;
   align-items: flex-start;
+  padding-top: 10px;
 `;
 
 
@@ -30,9 +30,9 @@ function App() {
     console.log(info);
 
     const {source, destination, draggableId} = info;
+    if(!destination) return;
 
     if(destination?.droppableId === source.droppableId) {
-
       setToDos(allBoards => {
         const todoCopy = [...allBoards[source.droppableId]];
 
@@ -43,6 +43,21 @@ function App() {
             [source.droppableId]: todoCopy,
           }; 
         });
+    }
+
+    if(destination?.droppableId !== source.droppableId) {
+      setToDos( allBoards => {
+        const sourceBCopy = [...allBoards[source.droppableId]];
+        const destBCopy = [...allBoards[destination.droppableId]];
+
+        sourceBCopy.splice(source.index, 1); //delete item
+        destBCopy.splice(destination?.index, 0, draggableId ) //item 돌려놓기
+        return {
+          ...allBoards, 
+          [source.droppableId]: sourceBCopy,
+          [destination.droppableId]: destBCopy,
+        }; 
+      })
     }
     
   };
