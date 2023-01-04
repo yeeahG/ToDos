@@ -1,6 +1,8 @@
 import { Droppable } from "react-beautiful-dnd";
+import { useForm } from "react-hook-form";
 import styled from "styled-components";
 import DragCard from "../Card/DragCard";
+import { ITodo } from "../Model/atoms";
 
 const Wrapper = styled.div`
   background-color: ${props => props.theme.boardColor};
@@ -40,15 +42,38 @@ const Box = styled.div<IBoxProps>`
     transition: background-color 0.3s ease-in-out;
 `;
 
+const Form = styled.div`
+    width: 100%
+    input {
+        width: 100%;
+    }
+`
+
 interface IBoardProps {
-    toDos: string[];
+    toDos: ITodo[];
     boardId: string;
 }
 
+interface IForm {
+    toDo: string;
+}
+
 function Board( {toDos, boardId}:IBoardProps ) {
+    const {register, setValue, handleSubmit} = useForm<IForm>();
+    const onValid = ({toDo}:IForm) => {
+        setValue("toDo", "");
+    }
+
     return (
     <Wrapper>
         <Title>{boardId}</Title>
+        <Form onSubmit={handleSubmit(onValid)}>
+            <input 
+                type="text" 
+                {...register("toDo", { required: true })}
+                placeholder={`새로운 ${boardId}를 입력하세요`}
+            />
+        </Form>
         <Droppable droppableId={boardId}>
         {(provided, snapshot) => 
             <Box 
@@ -58,7 +83,12 @@ function Board( {toDos, boardId}:IBoardProps ) {
                 {...provided.droppableProps}
             >
                 {toDos.map((toDo, index) => (
-                <DragCard key={toDo} toDo={toDo} index={index}/>
+                <DragCard 
+                    key={toDo.id} 
+                    toDoId={toDo.id} 
+                    index={index}
+                    toDoTask={toDo.text}
+                />
                 )
                 )}
                 {provided.placeholder}

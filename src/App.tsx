@@ -39,9 +39,10 @@ function App() {
     if(destination?.droppableId === source.droppableId) {
       setToDos(allBoards => {
         const todoCopy = [...allBoards[source.droppableId]];
+        const todoObj = todoCopy[source.index];
 
         todoCopy.splice(source.index, 1); //delete item
-        todoCopy.splice(destination?.index, 0, draggableId ) //item 돌려놓기
+        todoCopy.splice(destination?.index, 0, todoObj ) //item 돌려놓기
           return {
             ...allBoards, 
             [source.droppableId]: todoCopy,
@@ -52,10 +53,11 @@ function App() {
     if(destination?.droppableId !== source.droppableId) {
       setToDos( allBoards => {
         const sourceBCopy = [...allBoards[source.droppableId]];
+        const todoObj = sourceBCopy[source.index];
         const destBCopy = [...allBoards[destination.droppableId]];
 
         sourceBCopy.splice(source.index, 1); //delete item
-        destBCopy.splice(destination?.index, 0, draggableId ) //item 돌려놓기
+        destBCopy.splice(destination?.index, 0, todoObj ) //item 돌려놓기
         return {
           ...allBoards, 
           [source.droppableId]: sourceBCopy,
