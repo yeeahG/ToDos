@@ -1,6 +1,6 @@
 import React from "react";
 import { useRecoilState, useRecoilValue } from "recoil";
-import { minuteState } from "../atoms";
+import { minuteState } from "../components/Model/atoms";
 import { hourSelector } from "./AnoAtoms";
 
 function Another () {
