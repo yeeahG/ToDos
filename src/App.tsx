@@ -2,6 +2,7 @@ import { DragDropContext, Droppable, Draggable, DropResult } from "react-beautif
 import { useRecoilState, useRecoilValue } from "recoil";
 import styled from "styled-components";
 import { toDoState } from "./atoms";
+import DragCard from "./components/DragCard";
 
 const Wrapper = styled.div`
   display: flex;
@@ -28,12 +29,7 @@ const Board = styled.div`
   min-height: 200px;
 `;
 
-const Card = styled.div`
-  background-color: ${props => props.theme.cardColor};
-  border-radius: 5px;
-  padding: 5px 10px;
-  margin-bottom: 5px
-`;
+
 
 function App() {
   const [toDos, setToDos] = useRecoilState(toDoState)
@@ -58,17 +54,7 @@ function App() {
                 ref={provided.innerRef}
               >
                 {toDos.map((toDo, index) => (
-                  <Draggable draggableId={toDo} index={index} key={toDo} >
-                    {(provided) => 
-                      <Card 
-                        ref={provided.innerRef}
-                        {...provided.draggableProps}
-                        {...provided.dragHandleProps}
-                      >
-                        {toDo}
-                      </Card>
-                    }
-                  </Draggable>
+                  <DragCard key={toDo} toDo={toDo} index={index}/>
                   )
                 )}
                 {provided.placeholder}
