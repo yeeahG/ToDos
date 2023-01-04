@@ -32,6 +32,7 @@ function ToDoList() {
 
   //const [toDos, setToDos] = useRecoilState(toDoState)
   const toDos = useRecoilValue(toDoState)
+  console.log(toDos);
 
 {/*
   const onSubmit = ({toDo}:IForm) => {
