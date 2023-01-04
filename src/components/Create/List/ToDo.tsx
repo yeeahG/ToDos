@@ -1,32 +1,10 @@
 import React from "react";
 import { useSetRecoilState } from "recoil";
-import { IToDo, toDoState } from "../../atoms";
-
-
-// [
-//     {
-//         "text": "5",
-//         "category": "TODO",
-//         "id": 1672829869462
-//     },
-//     {
-//         "text": "4",
-//         "category": "TODO",
-//         "id": 1672829869216
-//     },
-//     {
-//         "text": "3",
-//         "category": "TODO",
-//         "id": 1672829868968
-// ]
+import { Categories, IToDo, toDoState } from "../../atoms";
 
 // 1) find to do based on id
 // 2) Todo 카데고리의 text 3을 바꾸고 싶다면, array[2]가 경로라는걸 알기
 
-// const food = ["pizza", "mango", "strawberry", "meat"];
-// const front = ["pizza"];
-// const back = ["strawberry", "meat"];
-// const lastPart = [...front, "굴", ...back]
 
 function ToDo( {text, category, id }:IToDo ) {
     //To do category 변경
@@ -52,24 +30,38 @@ function ToDo( {text, category, id }:IToDo ) {
 
     const setToDos = useSetRecoilState(toDoState);
 
+    const deleteTodo = () => {
+        setToDos((oldToDos) => {
+        const targetIndex = oldToDos.findIndex((toDo) => toDo.id === id);
+        return [
+            ...oldToDos.slice(0, targetIndex),
+            ...oldToDos.slice(targetIndex + 1),
+        ];
+        });
+    };
+        
+
     return (
     <li>
         <span>{text}</span>
-        {category !== "DOING" && (
-        <button name="DOING" onClick={onClick}>
+        {category !== Categories.DOING && (
+        <button name={Categories.DOING} onClick={onClick}>
           Doing
         </button>
          )}
-        {category !== "TODO" && (
-            <button name="TODO" onClick={onClick}>
+        {category !== Categories.TODO && (
+            <button name={Categories.TODO} onClick={onClick}>
             To Do
             </button>
         )}
-        {category !== "DONE" && (
-            <button name="DONE" onClick={onClick}>
+        {category !== Categories.DONE && (
+            <button name={Categories.DONE} onClick={onClick}>
             Done
             </button>
         )}
+        <button onClick={deleteTodo}>
+            Delete
+        </button>
 
 
         {/*
