@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { useForm } from "react-hook-form";
 import { atom, useRecoilState, useRecoilValue, useSetRecoilState } from "recoil";
-import { toDoSelector, toDoState } from "./atoms";
+import { categoryState, toDoSelector, toDoState } from "./atoms";
 import CreateToDo from "./Create/CreateToDo";
 import ToDo from "./Create/List/ToDo";
 /*
@@ -31,7 +31,7 @@ function ToDoList() {
   //const { register, handleSubmit, setValue } = useForm<IForm>()
 
   //const [toDos, setToDos] = useRecoilState(toDoState)
-  const toDos = useRecoilValue(toDoState)
+  //const toDos = useRecoilValue(toDoState)
   //console.log(toDos);
 
 {/*
@@ -44,13 +44,28 @@ function ToDoList() {
   //const selectoreOutPut = useRecoilValue(toDoSelector);
   //console.log(selectoreOutPut);
 
-  const [toDo, doing, done] = useRecoilValue(toDoSelector);
+  const toDos = useRecoilValue(toDoSelector);
+  const [category, setCategory] = useRecoilState(categoryState);
+
+  const onInput = (event:React.FormEvent<HTMLSelectElement>) => {
+    setCategory(event.currentTarget.value);
+  }
   
+
   return (
     <div>
       <h1>To Do</h1>
       <hr />
+
+      <select value={category} onInput={onInput}>
+        <option value="TODO">TO DO</option>
+        <option value="DOING">DOING</option>
+        <option value="DONE">DONE</option>
+      </select>
       <CreateToDo />
+      {toDos?.map((toDo) => (
+        <ToDo key={toDo.id} {...toDo} />
+      ))}
 
         {/*
         <form
@@ -70,28 +85,6 @@ function ToDoList() {
           //<ToDo text={toDo.text} category={toDo.category} id={toDo.id} />
         )}
         </ul> */}
-
-      <h2>TODO</h2>
-      <ul>
-        {toDo.map(toDo => 
-          <ToDo key={toDo.id} {...toDo} /> 
-        )}
-      </ul>
-      <hr/>
-      <h2>DOING</h2>
-      <ul>
-        {doing.map(toDo => 
-          <ToDo key={toDo.id} {...toDo} /> 
-        )}
-      </ul>
-      <hr />
-      <h2>DONE</h2>
-      <ul>
-        {done.map(toDo => 
-          <ToDo key={toDo.id} {...toDo} /> 
-        )}
-      </ul>
-      <hr />
 
     </div>
   );
