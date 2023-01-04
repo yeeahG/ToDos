@@ -18,7 +18,7 @@ export const minuteState = atom({
 export const toDoState = atom<IToDoState>({
     key: "toDo",
     default: {
-        TODO: [{id:1, text: "hello"}, {id:2, text: "hi!"}],
+        TODO: [],
         DOING: [],
         DONE: [],
     },
