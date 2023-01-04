@@ -1,5 +1,7 @@
-import { DragDropContext, Droppable, Draggable } from "react-beautiful-dnd";
+import { DragDropContext, Droppable, Draggable, DropResult } from "react-beautiful-dnd";
+import { useRecoilState, useRecoilValue } from "recoil";
 import styled from "styled-components";
+import { toDoState } from "./atoms";
 
 const Wrapper = styled.div`
   display: flex;
@@ -33,10 +35,18 @@ const Card = styled.div`
   margin-bottom: 5px
 `;
 
-const toDos = ["a", "b", "c", "d", "e", "f"]
-
 function App() {
-  const onDragEnd = () => {};
+  const [toDos, setToDos] = useRecoilState(toDoState)
+  const onDragEnd = ({draggableId, destination, source}:DropResult) => {
+    if(!destination) return;
+    setToDos(oldToDos => {
+      const copyToDos = [...oldToDos]; 
+      copyToDos.splice(source.index, 1); //delete item
+      copyToDos.splice(destination?.index, 0, draggableId ) //item 돌려놓기
+
+      return copyToDos;
+    });
+  };
   return (
     <DragDropContext onDragEnd={onDragEnd}>
       <Wrapper>
@@ -48,7 +58,7 @@ function App() {
                 ref={provided.innerRef}
               >
                 {toDos.map((toDo, index) => (
-                  <Draggable draggableId={toDo} index={index} >
+                  <Draggable draggableId={toDo} index={index} key={toDo} >
                     {(provided) => 
                       <Card 
                         ref={provided.innerRef}
