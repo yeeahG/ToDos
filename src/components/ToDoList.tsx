@@ -3,6 +3,7 @@ import { useForm } from "react-hook-form";
 import { atom, useRecoilState, useRecoilValue, useSetRecoilState } from "recoil";
 import { toDoState } from "./atoms";
 import CreateToDo from "./Create/CreateToDo";
+import ToDo from "./Create/List/ToDo";
 /*
 interface IForm {
   toDo: string;
@@ -59,9 +60,8 @@ function ToDoList() {
         </form> */}
       <ul>
         {toDos.map(toDo => 
-          <li key={toDo.id}>
-            {toDo.text}
-          </li>
+          <ToDo {...toDo} /> 
+          //<ToDo text={toDo.text} category={toDo.category} id={toDo.id} />
         )}
       </ul>
     </div>
