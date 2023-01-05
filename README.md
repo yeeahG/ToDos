@@ -1,6 +1,11 @@
 # 🖥️
 http://writemytodo.s3-website.ap-northeast-2.amazonaws.com/
-
-- npm start
-- 혹은 http://writemytodo.s3-website.ap-northeast-2.amazonaws.com/에 배포하여서 위의 링크로 실행하시면 됩니다
-
+```
+npm start
+```
+배포화면은
+```
+http://writemytodo.s3-website.ap-northeast-2.amazonaws.com/
+```
+## 기능 설명
+SOLUTION.md
