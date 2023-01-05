@@ -98,6 +98,19 @@ function Board( {toDos, boardId, index}:IBoardProps ) {
     const onClick = (boardId: string) => {
         console.log("Click");
 
+        setToDos((allBoards) => {
+            const boardList = Object.keys(allBoards).filter(
+                board => board !== boardId
+            )
+            let boards = {};
+            boardList.map(it => {
+                boards = {
+                    ...boards,
+                    [it]: allBoards[it]
+                }
+            })
+            return { ...boards };
+        })
         
     }
     // useEffect(() => {
