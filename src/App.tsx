@@ -10,18 +10,19 @@ import AddBoard from "./components/Board/AddBoard";
 
 const BigBox = styled.div`
   width: 100%;
-  padding-top: 20px;
   position: relative;
 `;
 
 const TitleBox = styled.div`
   display: flex;
   justify-content: space-between;
+  background-color: #FFFACD;
 `;
   
 const Title = styled.h1`
   font-size: 50px;
-  margin: 30px
+  margin: 30px;
+  color: #2F4F4F;
 `
 
 const Wrapper = styled.div`

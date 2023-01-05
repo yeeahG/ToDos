@@ -4,8 +4,8 @@ import { useForm } from "react-hook-form";
 import { useSetRecoilState } from "recoil";
 import styled from "styled-components";
 import DragCard from "../Card/DragCard";
-import { ITodo, toDoState } from "../Model/atoms";
-import { saveTodos } from "../Model/localAtoms";
+import { defaultTodos, ITodo, toDoState } from "../Model/atoms";
+import { loadTodos, saveTodos } from "../Model/localAtoms";
 
 const Wrapper = styled.div<{isDragging: boolean}>`
   background-color: ${props => props.theme.boardColor};
@@ -83,7 +83,7 @@ interface IForm {
 }
 
 function Board( {toDos, boardId, index}:IBoardProps ) {
-    const setToDos = useSetRecoilState(toDoState)
+    const setToDos = useSetRecoilState(toDoState);
 
     const {register, setValue, handleSubmit} = useForm<IForm>();
     const onValid = ({toDo}:IForm) => {
@@ -107,9 +107,13 @@ function Board( {toDos, boardId, index}:IBoardProps ) {
         console.log("Click", boardId);
 
         setToDos((allBoards) => {
+            const boardTitleCount = Object.keys(allBoards).length;
+            console.log(boardTitleCount);
+            
             const boardList = Object.keys(allBoards).filter(
                 board => board !== boardId
-            )
+            );
+            
             let boards = {};
             boardList.map(it => {
                 boards = {
@@ -146,7 +150,7 @@ function Board( {toDos, boardId, index}:IBoardProps ) {
                 <input 
                     type="text" 
                     {...register("toDo", { required: true })}
-                    placeholder={`새로운 ${boardId}를 입력하세요`}
+                    placeholder={`${boardId}에 새로운 할일을 입력하세요`}
                 />
             </Form>
             <Droppable droppableId={boardId}>

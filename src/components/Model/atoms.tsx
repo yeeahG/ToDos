@@ -10,16 +10,10 @@ export interface IToDoState {
     [key: string]: ITodo[];
 }
 
-
-export const minuteState = atom({
-    key: "minutes",
-    default: 0,
-})
-
 export const defaultTodos: IToDoState = {
-    Todos: [],
-    Doing: [],
-    Done: [],
+    TODO: [],
+    DOING: [],
+    DONE: [],
 };
 
 export const toDoState = atom<IToDoState>({
