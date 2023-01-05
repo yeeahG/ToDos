@@ -6,6 +6,7 @@ import DragCard from "./components/Card/DragCard";
 import Board from "./components/Board/Board";
 import { useEffect } from "react";
 import { saveTodos } from "./components/Model/localAtoms";
+import AddBoard from "./components/Board/AddBoard";
 
 const BigBox = styled.div`
   width: 100%;
@@ -23,7 +24,7 @@ const Wrapper = styled.div`
 const Boards = styled.div`
   display: flex;
   gap: 10px;
-  width: 100%;
+  width: auto;
   justify-content: center;
   align-items: flex-start;
   padding-top: 10px;
@@ -119,9 +120,9 @@ function App() {
                   )}
                 {provided.placeholder}
               </Boards>
-            )
-            }
+            )}
           </Droppable>
+          <AddBoard />
         </Wrapper>
       </DragDropContext>
     </BigBox>
