@@ -5,6 +5,7 @@ import { ThemeProvider } from "styled-components";
 import { darkTheme } from "./theme";
 import { createGlobalStyle } from "styled-components";
 import App from "./App";
+import './index.css'
 
 const GlobalStyle = createGlobalStyle`
 @import url('https://fonts.googleapis.com/css2?family=Abril+Fatface&family=Permanent+Marker&family=Rubik+Mono+One&family=Ultra&display=swap');
@@ -62,7 +63,7 @@ table {
 }
 body {
   font-weight: 300;
-  font-family: 'Source Sans Pro', sans-serif;
+  font-family: Pretendard, -apple-system, BlinkMacSystemFont, system-ui, Roboto, 'Helvetica Neue', 'Segoe UI', 'Apple SD Gothic Neo', 'Noto Sans KR', 'Malgun Gothic', sans-serif;
   background-color: #FFFAFA;
   color:black;
   line-height: 1.2;

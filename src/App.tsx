@@ -11,17 +11,17 @@ import AddBoard from "./components/Board/AddBoard";
 const BigBox = styled.div`
   width: 100%;
   position: relative;
+
 `;
 
 const TitleBox = styled.div`
   display: flex;
   justify-content: space-between;
-  background-color: #FFFACD;
 `;
-  
+
 const Title = styled.h1`
   font-size: 50px;
-  margin: 30px;
+  margin: 30px 50px;
   color: #2F4F4F;
 `
 
