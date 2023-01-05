@@ -1,11 +1,11 @@
-import { Droppable } from "react-beautiful-dnd";
+import { Draggable, Droppable } from "react-beautiful-dnd";
 import { useForm } from "react-hook-form";
 import { useSetRecoilState } from "recoil";
 import styled from "styled-components";
 import DragCard from "../Card/DragCard";
 import { ITodo, toDoState } from "../Model/atoms";
 
-const Wrapper = styled.div`
+const Wrapper = styled.div<{isDragging: boolean}>`
   background-color: ${props => props.theme.boardColor};
   padding-top: 20px;
   padding: 20px 10px;
@@ -50,16 +50,24 @@ const Form = styled.form`
   }
 `;
 
+const Header = styled.div<{ isDragging: boolean }>`
+  padding-top: 10px;
+  border-radius: 5px 5px 0 0;
+  position: relative;
+  justify-content: space-between;
+`;
+
 interface IBoardProps {
     toDos: ITodo[];
     boardId: string;
+    index: number;
 }
 
 interface IForm {
     toDo: string;
 }
 
-function Board( {toDos, boardId}:IBoardProps ) {
+function Board( {toDos, boardId, index}:IBoardProps ) {
     const setToDos = useSetRecoilState(toDoState)
 
     const {register, setValue, handleSubmit} = useForm<IForm>();
@@ -81,37 +89,51 @@ function Board( {toDos, boardId}:IBoardProps ) {
     }
 
     return (
-    <Wrapper>
-        <Title>{boardId}</Title>
-        <Form onSubmit={handleSubmit(onValid)}>
-            <input 
-                type="text" 
-                {...register("toDo", { required: true })}
-                placeholder={`새로운 ${boardId}를 입력하세요`}
-            />
-        </Form>
-        <Droppable droppableId={boardId}>
-        {(provided, snapshot) => 
-            <Box 
-                isDraggingOver={snapshot.isDraggingOver}
-                isDraggingFromThis={Boolean(snapshot.draggingFromThisWith)}
-                ref={provided.innerRef} 
-                {...provided.droppableProps}
-            >
-                {toDos.map((toDo, index) => (
-                <DragCard 
-                    key={toDo.id} 
-                    toDoId={toDo.id} 
-                    index={index}
-                    toDoTask={toDo.text}
+    <Draggable draggableId={boardId} index={index}>
+        {(provided, snapshot) => (
+        <Wrapper
+            ref={provided.innerRef}
+            key={index}
+            isDragging={snapshot.isDragging}
+            {...provided.draggableProps}
+        >
+          <Header
+            {...provided.dragHandleProps}
+            isDragging={snapshot.isDragging}
+          >
+            <Title>{boardId}</Title>
+            <Form onSubmit={handleSubmit(onValid)}>
+                <input 
+                    type="text" 
+                    {...register("toDo", { required: true })}
+                    placeholder={`새로운 ${boardId}를 입력하세요`}
                 />
-                )
-                )}
-                {provided.placeholder}
-            </Box>
-        }
-    </Droppable>
-    </Wrapper>
+            </Form>
+            <Droppable droppableId={boardId}>
+            {(provided, snapshot) => 
+                <Box 
+                    isDraggingOver={snapshot.isDraggingOver}
+                    isDraggingFromThis={Boolean(snapshot.draggingFromThisWith)}
+                    ref={provided.innerRef} 
+                    {...provided.droppableProps}
+                >
+                    {toDos.map((toDo, index) => (
+                    <DragCard 
+                        key={toDo.id} 
+                        toDoId={toDo.id} 
+                        index={index}
+                        toDoTask={toDo.text}
+                    />
+                    )
+                    )}
+                    {provided.placeholder}
+                </Box>
+            }
+            </Droppable>
+            </Header>
+        </Wrapper>
+        )}
+    </Draggable>
     )
 }
 

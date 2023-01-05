@@ -34,6 +34,8 @@ function App() {
   const [toDos, setToDos] = useRecoilState(toDoState)
   const onDragEnd = (info:DropResult) => {
     const {source, destination, draggableId} = info;
+    console.log(info);
+    
     if(!destination) return;
 
     if(destination?.droppableId === source.droppableId) {
@@ -51,7 +53,7 @@ function App() {
     }
 
     if(destination?.droppableId !== source.droppableId) {
-      setToDos( allBoards => {
+      setToDos( (allBoards) => {
         const sourceBCopy = [...allBoards[source.droppableId]];
         const todoObj = sourceBCopy[source.index];
         const destBCopy = [...allBoards[destination.droppableId]];
@@ -65,6 +67,27 @@ function App() {
         }; 
       })
     };
+
+
+    if(source.droppableId === "Boards") {
+      setToDos(allBoards => {
+        const boardList = Object.keys(allBoards);
+        const boardObj = boardList[source.index];
+
+        boardList.splice(source.index, 1);
+        boardList.splice(destination.index, 0, boardObj);
+
+        let boards= {};
+        boardList.map(board => {
+          boards = {
+            ...boards, 
+            [board]: allBoards[board],
+          };
+        })
+        return {...boards};
+      });
+      return;
+    }
     
   };
 
@@ -78,17 +101,28 @@ function App() {
       <h1>Write my To Do</h1>
       <DragDropContext onDragEnd={onDragEnd}>
         <Wrapper>
-          <Boards>
-            {Object.keys(toDos).map(
-                (boardId) => (
-                  <Board 
-                    boardId={boardId} 
-                    key={boardId}
-                    toDos={toDos[boardId]}
-                  />
-                )
-              )}
-          </Boards>
+          <Droppable 
+            droppableId="Boards"
+            direction="horizontal" 
+            type="BOARD"
+          >
+            {provided => (
+              <Boards ref={provided.innerRef} {...provided.droppableProps}>
+                {Object.keys(toDos).map(
+                    (boardId, index) => (
+                      <Board 
+                        boardId={boardId} 
+                        key={boardId}
+                        toDos={toDos[boardId]}
+                        index={index}
+                      />
+                    )
+                  )}
+                {provided.placeholder}
+              </Boards>
+            )
+            }
+          </Droppable>
         </Wrapper>
       </DragDropContext>
     </BigBox>
