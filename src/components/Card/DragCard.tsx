@@ -110,7 +110,7 @@ function DragCard( {toDoId, toDoTask, index, boardId}:IDragCardPrps ) {
               ...allBoards, 
               [boardId]: todoCopy,
             }; 
-      });
+        });
 
       } else return;
     };

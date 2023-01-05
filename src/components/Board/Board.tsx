@@ -145,17 +145,14 @@ function Board( {toDos, boardId, index}:IBoardProps ) {
         setTitle(e.target.value);
     }
 
-    const onTitleClick = (e: React.KeyboardEvent<HTMLInputElement>) => {
-        setInput(true);
-        
+    const onTitleClick = (e: React.KeyboardEvent<HTMLInputElement>) => {        
         if (e.key === "Enter") {
             setInput(false);
             setTitle(title === "" ? boardId : title);
+
           } else return;
     }
-    // useEffect(() => {
-    //     saveTodos(toDos);
-    //   }, [toDos]);
+
       
     return (
     <Draggable draggableId={boardId} index={index}>
