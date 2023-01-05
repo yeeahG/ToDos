@@ -1,3 +1,4 @@
+import React from "react";
 import { Draggable, Droppable } from "react-beautiful-dnd";
 import { useForm } from "react-hook-form";
 import { useSetRecoilState } from "recoil";
@@ -14,6 +15,17 @@ const Wrapper = styled.div<{isDragging: boolean}>`
   width: 300px;
   disply: flex;
   flex-direction: column;
+`;
+
+const Header = styled.div<{ isDragging: boolean }>`
+  padding-top: 10px;
+  border-radius: 5px 5px 0 0;
+  position: relative;
+  justify-content: space-between;
+`;
+
+const Button = styled.div`
+
 `;
 
 const Title = styled.h2`
@@ -50,12 +62,6 @@ const Form = styled.form`
   }
 `;
 
-const Header = styled.div<{ isDragging: boolean }>`
-  padding-top: 10px;
-  border-radius: 5px 5px 0 0;
-  position: relative;
-  justify-content: space-between;
-`;
 
 interface IBoardProps {
     toDos: ITodo[];
@@ -88,6 +94,11 @@ function Board( {toDos, boardId, index}:IBoardProps ) {
         setValue("toDo", "");
     }
 
+    const onClick = (boardId: string) => {
+        //console.log("Click");
+
+    }
+
     return (
     <Draggable draggableId={boardId} index={index}>
         {(provided, snapshot) => (
@@ -101,6 +112,9 @@ function Board( {toDos, boardId, index}:IBoardProps ) {
             {...provided.dragHandleProps}
             isDragging={snapshot.isDragging}
           >
+            <Button onClick={() => onClick(boardId)}>
+                X
+            </Button>
             <Title>{boardId}</Title>
             <Form onSubmit={handleSubmit(onValid)}>
                 <input 
@@ -137,4 +151,4 @@ function Board( {toDos, boardId, index}:IBoardProps ) {
     )
 }
 
-export default Board;
+export default React.memo(Board);

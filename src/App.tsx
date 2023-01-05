@@ -49,7 +49,7 @@ function App() {
             ...allBoards, 
             [source.droppableId]: todoCopy,
           }; 
-        });
+      });
     }
 
     if(destination?.droppableId !== source.droppableId) {
