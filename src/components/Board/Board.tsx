@@ -19,22 +19,24 @@ const Wrapper = styled.div<{isDragging: boolean}>`
 `;
 
 const Header = styled.div<{ isDragging: boolean }>`
-  padding-top: 10px;
   border-radius: 5px 5px 0 0;
   position: relative;
   justify-content: space-between;
 `;
 
 const Button = styled.div`
-
+    display: flex;
+    justify-content: flex-end;
 `;
 
-const Title = styled.h2`
-    font-size: 20px;
+const Title = styled.h1`
+    font-size: 25px;
     font-weight: 500;
     text-align: center;
     background-color: inherit;
     color: #FFFACD;
+    margin-top: 0;
+    padding-bottom: 10px;
 `;
 
 interface IBoxProps {
@@ -58,8 +60,14 @@ const Box = styled.div<IBoxProps>`
 
 const Form = styled.form`
   width: 100%;
+  align-item: center;
   input {
     width: 100%;
+    border: none;
+    height: 30px;
+    border-radius: 5px;
+    padding: 5px 0px 5px 0px;
+    margin-bottom: 5px
   }
 `;
 
@@ -96,7 +104,7 @@ function Board( {toDos, boardId, index}:IBoardProps ) {
     }
 
     const onClick = (boardId: string) => {
-        console.log("Click");
+        console.log("Click", boardId);
 
         setToDos((allBoards) => {
             const boardList = Object.keys(allBoards).filter(
@@ -155,6 +163,7 @@ function Board( {toDos, boardId, index}:IBoardProps ) {
                         toDoId={toDo.id} 
                         index={index}
                         toDoTask={toDo.text}
+                        boardId={boardId}
                     />
                     )
                     )}

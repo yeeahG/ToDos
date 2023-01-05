@@ -14,11 +14,22 @@ const BigBox = styled.div`
   position: relative;
 `;
 
+const TitleBox = styled.div`
+  display: flex;
+  justify-content: space-between;
+`;
+  
+const Title = styled.h1`
+  font-size: 50px;
+  margin: 30px
+`
+
 const Wrapper = styled.div`
   display: flex;
   margin: 0 auto;
   justify-content: center;
   align-items: center;
+  align-items: flex-start;
 `;
 
 const Boards = styled.div`
@@ -28,6 +39,7 @@ const Boards = styled.div`
   justify-content: center;
   align-items: flex-start;
   padding-top: 10px;
+  flex-wrap: wrap;
 `;
 
 
@@ -38,8 +50,6 @@ function App() {
     console.log(info);
     
     if(!destination) return;
-
-
 
     if(source.droppableId === "Boards") {
       setToDos(allBoards => {
@@ -98,7 +108,10 @@ function App() {
 
   return (
     <BigBox>
-      <h1>Write my To Do</h1>
+      <TitleBox>
+        <Title>Write my To Do</Title>
+        <AddBoard />
+      </TitleBox>
       <DragDropContext onDragEnd={onDragEnd}>
         <Wrapper>
           <Droppable 
@@ -122,7 +135,7 @@ function App() {
               </Boards>
             )}
           </Droppable>
-          <AddBoard />
+
         </Wrapper>
       </DragDropContext>
     </BigBox>
