@@ -89,8 +89,8 @@ function App() {
           const todoObj = sourceBCopy[source.index];
           const destBCopy = [...allBoards[destination.droppableId]];
 
-          sourceBCopy.splice(source.index, 1); //delete item
-          destBCopy.splice(destination?.index, 0, todoObj ) //item 돌려놓기
+          sourceBCopy.splice(source.index, 1);
+          destBCopy.splice(destination?.index, 0, todoObj );
           return {
             ...allBoards, 
             [source.droppableId]: sourceBCopy,
