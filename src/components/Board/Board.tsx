@@ -1,10 +1,11 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { Draggable, Droppable } from "react-beautiful-dnd";
 import { useForm } from "react-hook-form";
 import { useSetRecoilState } from "recoil";
 import styled from "styled-components";
 import DragCard from "../Card/DragCard";
 import { ITodo, toDoState } from "../Model/atoms";
+import { saveTodos } from "../Model/localAtoms";
 
 const Wrapper = styled.div<{isDragging: boolean}>`
   background-color: ${props => props.theme.boardColor};
@@ -95,10 +96,14 @@ function Board( {toDos, boardId, index}:IBoardProps ) {
     }
 
     const onClick = (boardId: string) => {
-        //console.log("Click");
+        console.log("Click");
 
+        
     }
-
+    // useEffect(() => {
+    //     saveTodos(toDos);
+    //   }, [toDos]);
+      
     return (
     <Draggable draggableId={boardId} index={index}>
         {(provided, snapshot) => (
