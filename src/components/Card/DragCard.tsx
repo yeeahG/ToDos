@@ -4,6 +4,7 @@ import styled from "styled-components";
 import { useSetRecoilState } from "recoil";
 import { toDoState } from "../Model/atoms";
 import clsx from "clsx";
+import { useForm } from "react-hook-form";
 
 
 const Card = styled.div<{isDragging:boolean}>`
@@ -33,6 +34,10 @@ const Button = styled.div`
 const Container = styled.div`
   display: flex;
   justify-content: space-between;
+  input {
+    background-color: transparent;
+
+  }
 `;
 
 interface IDragCardPrps {
@@ -47,6 +52,7 @@ export type InputChangeEvent = ChangeEvent<HTMLInputElement>
 
 function DragCard( {toDoId, toDoTask, index, boardId}:IDragCardPrps ) {
   const setToDos = useSetRecoilState(toDoState);
+  
   const [edited, setEdited] = useState(false);
   const [newText, setNewText] = useState(toDoTask);
 
@@ -83,9 +89,31 @@ function DragCard( {toDoId, toDoTask, index, boardId}:IDragCardPrps ) {
     const handleKeyDown = (e: KeyboardEvent<HTMLInputElement>) => {
       if (e.key === "Enter") {
         setEdited(!edited);
-      }
+        setNewText(newText === "" ? toDoTask : newText);
+
+        
+        setToDos(allBoards => {
+          const todoCopy = [...allBoards[boardId]];
+          const todoObj = todoCopy[index];
+          
+          const newToDo = {
+            id: Date.now(),
+            text: newText,
+          }
+
+          const updateObj = newToDo
+
+          todoCopy.splice(index, 1);
+          todoCopy.splice(index, 0, updateObj ) 
+
+            return {
+              ...allBoards, 
+              [boardId]: todoCopy,
+            }; 
+      });
+
+      } else return;
     };
-    
 
     return (
     <Draggable draggableId={toDoId + ""} index={index} >
@@ -101,43 +129,19 @@ function DragCard( {toDoId, toDoTask, index, boardId}:IDragCardPrps ) {
             <Container>
               <input 
                 type="text" 
-                value={toDoTask} 
-                onChange={(e) => onEdit(e)}
+                value={newText} 
+                onChange={onEdit}
                 onKeyDown={handleKeyDown}
               />
-              <Button onClick={() => onClose()}>cancel</Button>
+              <Button onClick={onClose}>cancel</Button>
             </Container>
           ) : (
             <Container>
-              <div onClick={() => onOpen()}>{toDoTask}</div>
+              <div onClick={onOpen}>{toDoTask}</div>
               <Button onClick={() => onDelete(index)}> X </Button>
             </Container>
           )}
-      </div>
-          {/* {!edited ?
-            <>
-              {toDoTask}
-              <button onClick={onOpen}> Edit </button>
-              <Button onClick={() => onDelete(index)}>
-                X
-              </Button>
-            </>
-            : 
-            <form
-              className={clsx(edited ? 'edited' : 'hidden')}
-            >
-              <input 
-                value={toDoTask}
-                type={'text'}
-                onChange={onEdit}
-              />
-              <button onClick={onClose}>X</button>
-              <button >Add</button>
-            </form>
-          } */}
-          {/*{!edited && toDoTask}
-          {!edited && <button onClick={onOpen}> Edit </button>} */}
-
+          </div>
         </Card>
       }
     </Draggable>

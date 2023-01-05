@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { Draggable, Droppable } from "react-beautiful-dnd";
 import { useForm } from "react-hook-form";
 import { useSetRecoilState } from "recoil";
@@ -61,14 +61,27 @@ const Box = styled.div<IBoxProps>`
 const Form = styled.form`
   width: 100%;
   align-item: center;
-  input {
-    width: 100%;
-    border: none;
-    height: 30px;
-    border-radius: 5px;
-    padding: 5px 0px 5px 0px;
-    margin-bottom: 5px
-  }
+
+    input {
+        width: 100%;
+        border: none;
+        height: 30px;
+        border-radius: 5px;
+        padding: 5px 0px 5px 0px;
+        margin-bottom: 5px;
+    }
+
+    .title-input {
+        background-color: transparent;
+        border: none;
+        font-size: 20px;
+        font-weight: 500;
+        text-align: center;
+        background-color: inherit;
+        color: white;
+        margin-top: 0;
+        padding-bottom: 10px;
+    }
 `;
 
 
@@ -84,6 +97,8 @@ interface IForm {
 
 function Board( {toDos, boardId, index}:IBoardProps ) {
     const setToDos = useSetRecoilState(toDoState);
+    const [title, setTitle] = useState(boardId);
+    const [input, setInput] = useState(false);
 
     const {register, setValue, handleSubmit} = useForm<IForm>();
     const onValid = ({toDo}:IForm) => {
@@ -124,6 +139,19 @@ function Board( {toDos, boardId, index}:IBoardProps ) {
             return { ...boards };
         })
         
+    };
+
+    const onTitleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+        setTitle(e.target.value);
+    }
+
+    const onTitleClick = (e: React.KeyboardEvent<HTMLInputElement>) => {
+        setInput(true);
+        
+        if (e.key === "Enter") {
+            setInput(false);
+            setTitle(title === "" ? boardId : title);
+          } else return;
     }
     // useEffect(() => {
     //     saveTodos(toDos);
@@ -145,7 +173,26 @@ function Board( {toDos, boardId, index}:IBoardProps ) {
             <Button onClick={() => onClick(boardId)}>
                 X
             </Button>
-            <Title>{boardId}</Title>
+            {/* <Title>{boardId}</Title> */}
+            {input ? 
+                (
+                    <Form>
+                        <input 
+                            className="title-input"
+                            type="text" 
+                            value={title}
+                            onChange={onTitleChange}
+                            onKeyDown={onTitleClick}
+                        />
+                    </Form>
+                )
+                    :
+                (
+                    <Title onClick={() => setInput(true)}>
+                        {boardId}
+                    </Title>
+                )
+            }
             <Form onSubmit={handleSubmit(onValid)}>
                 <input 
                     type="text" 
