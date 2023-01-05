@@ -14,7 +14,9 @@ const Card = styled.div<{isDragging:boolean}>`
   }
   border-radius: 5px;
   padding: 5px 10px;
-  margin-bottom: 5px
+  margin-bottom: 5px;
+  display: flex;
+  justify-content: space-between;
 `;
 
 const Button = styled.div`
@@ -31,10 +33,6 @@ interface IDragCardPrps {
 
 function DragCard( {toDoId, toDoTask, index, boardId}:IDragCardPrps ) {
   const setToDos = useSetRecoilState(toDoState);
-  console.log(toDoTask);
-  console.log(boardId);
-  
-  
 
   const onClick = (index: number) => {
     console.log("Click", index, boardId);
@@ -55,19 +53,19 @@ function DragCard( {toDoId, toDoTask, index, boardId}:IDragCardPrps ) {
 
     return (
     <Draggable draggableId={toDoId + ""} index={index} >
-        {(provided, snapshot) => 
-          <Card 
-            isDragging={snapshot.isDragging}
-            ref={provided.innerRef}
-            {...provided.draggableProps}
-            {...provided.dragHandleProps}
-          >
-            {toDoTask}
-            <Button onClick={() => onClick(index)}>
-              X
-            </Button>
-          </Card>
-        }
+      {(provided, snapshot) => 
+        <Card 
+          isDragging={snapshot.isDragging}
+          ref={provided.innerRef}
+          {...provided.draggableProps}
+          {...provided.dragHandleProps}
+        >
+          {toDoTask}
+          <Button onClick={() => onClick(index)}>
+            X
+          </Button>
+        </Card>
+      }
     </Draggable>
     )
 
