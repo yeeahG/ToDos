@@ -4,6 +4,8 @@ import styled from "styled-components";
 import { toDoState } from "./components/Model/atoms";
 import DragCard from "./components/Card/DragCard";
 import Board from "./components/Board/Board";
+import { useEffect } from "react";
+import { saveTodos } from "./components/Model/localAtoms";
 
 const BigBox = styled.div`
   width: 100%;
@@ -62,9 +64,15 @@ function App() {
           [destination.droppableId]: destBCopy,
         }; 
       })
-    }
+    };
     
   };
+
+  useEffect(() => {
+    saveTodos(toDos);
+  }, [toDos]);
+
+
   return (
     <BigBox>
       <h1>Write my To Do</h1>
