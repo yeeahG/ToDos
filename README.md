@@ -1,6 +1,11 @@
 # 🖥️
+![site](https://user-images.githubusercontent.com/97449025/210833566-4b54d38b-2929-4e26-8634-d3eee9da09bb.png)
+
+```
+npm start
+```
 http://writemytodo.s3-website.ap-northeast-2.amazonaws.com/
+에서 기능을 확인해주세요
 
-- npm start
-- 혹은 http://writemytodo.s3-website.ap-northeast-2.amazonaws.com/에 배포하여서 위의 링크로 실행하시면 됩니다
-
+## 기능 설명
+[SOLUTION.md](https://github.com/yeeahG/ToDos/blob/main/SOLUTION.md)
