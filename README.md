@@ -20,12 +20,18 @@ React.js, Typescript, Recoil, styled-components, AWS S3
 
 
 ## 사용한 라이브러react.js
-react beautiful dnd  
-```Todo list와 Column 이동을 위하여 사용하였습니다. ```
-styled-components
-```컴포넌트에 스타일을 바로 삽입하기 위해 사용하였습니다. ```
-recoil
-```React의 상태관리를 위해 사용하였습니다.```
+- react beautiful dnd   
+```
+Todo list와 Column 이동을 위하여 사용하였습니다. 
+```  
+- styled-components  
+```
+컴포넌트에 스타일을 바로 삽입하기 위해 사용하였습니다. 
+```  
+- recoil  
+```
+React의 상태관리를 위해 사용하였습니다.
+```  
 
 
 ## 실행방법  
