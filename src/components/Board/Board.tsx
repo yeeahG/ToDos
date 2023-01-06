@@ -123,7 +123,24 @@ function Board( {toDos, boardId, index}:IBoardProps ) {
 
     const onClick = (boardId: string) => {
         console.log("Click", boardId);
-
+        
+        setToDos((allBoards) => {
+            const boardTitleCount = Object.keys(allBoards).length;
+            console.log(boardTitleCount);
+            
+            const boardList = Object.keys(allBoards).filter(
+                board => board !== boardId
+            );
+            
+            let boards = {};
+            boardList.map(it => {
+                boards = {
+                    ...boards,
+                    [it]: allBoards[it]
+                }
+            })
+            return { ...boards };
+        })
         
     };
 
