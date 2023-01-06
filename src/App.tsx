@@ -4,7 +4,7 @@ import styled from "styled-components";
 import { toDoState } from "./components/Model/atoms";
 import DragCard from "./components/Card/DragCard";
 import Board from "./components/Board/Board";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { saveTodos } from "./components/Model/localAtoms";
 import AddBoard from "./components/Board/AddBoard";
 
@@ -45,7 +45,9 @@ const Boards = styled.div`
 
 
 function App() {
-  const [toDos, setToDos] = useRecoilState(toDoState)
+  const [toDos, setToDos] = useRecoilState(toDoState);
+  const [boardTitle, setTitle] = useState<any | null>(null);
+
   const onDragEnd = (info:DropResult) => {
     const {source, destination, draggableId} = info;
     console.log(info);

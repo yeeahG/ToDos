@@ -99,6 +99,9 @@ function Board( {toDos, boardId, index}:IBoardProps ) {
     const setToDos = useSetRecoilState(toDoState);
     const [title, setTitle] = useState(boardId);
     const [input, setInput] = useState(false);
+    const [boardTitle, setBoardTitle] = useState<any | null>(null);
+
+    //console.log(boardTitle);
 
     const {register, setValue, handleSubmit} = useForm<IForm>();
     const onValid = ({toDo}:IForm) => {
@@ -121,23 +124,6 @@ function Board( {toDos, boardId, index}:IBoardProps ) {
     const onClick = (boardId: string) => {
         console.log("Click", boardId);
 
-        setToDos((allBoards) => {
-            const boardTitleCount = Object.keys(allBoards).length;
-            console.log(boardTitleCount);
-            
-            const boardList = Object.keys(allBoards).filter(
-                board => board !== boardId
-            );
-            
-            let boards = {};
-            boardList.map(it => {
-                boards = {
-                    ...boards,
-                    [it]: allBoards[it]
-                }
-            })
-            return { ...boards };
-        })
         
     };
 
@@ -145,12 +131,20 @@ function Board( {toDos, boardId, index}:IBoardProps ) {
         setTitle(e.target.value);
     }
 
-    const onTitleClick = (e: React.KeyboardEvent<HTMLInputElement>) => {        
+    const onTitleClick = (e: React.KeyboardEvent<HTMLInputElement>) => {  
+        
         if (e.key === "Enter") {
             setInput(false);
             setTitle(title === "" ? boardId : title);
 
-          } else return;
+          /* setToDos(allBoards => {
+                const boardList = Object.keys(allBoards);
+                console.log(boardList);
+                setTitle(boardList);
+                console.log(boardTitle);
+            }) */
+
+        } else return;
     }
 
       
