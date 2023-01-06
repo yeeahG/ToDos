@@ -1,11 +1,11 @@
 import React, { useEffect, useState } from "react";
 import { Draggable, Droppable } from "react-beautiful-dnd";
-import { useForm } from "react-hook-form";
 import { useSetRecoilState } from "recoil";
-import styled from "styled-components";
-import DragCard from "../Card/DragCard";
+import { useForm } from "react-hook-form";
 import { defaultTodos, ITodo, toDoState } from "../Model/atoms";
 import { loadTodos, saveTodos } from "../Model/localAtoms";
+import DragCard from "../Card/DragCard";
+import styled from "styled-components";
 
 const Wrapper = styled.div<{isDragging: boolean}>`
   background-color: ${props => props.theme.boardColor};
@@ -100,7 +100,6 @@ function Board( {toDos, boardId, index}:IBoardProps ) {
     const [title, setTitle] = useState(boardId);
     const [input, setInput] = useState(false);
     const [boardTitle, setBoardTitle] = useState<any | null>(null);
-
     //console.log(boardTitle);
 
     const {register, setValue, handleSubmit} = useForm<IForm>();
@@ -153,7 +152,8 @@ function Board( {toDos, boardId, index}:IBoardProps ) {
         if (e.key === "Enter") {
             setInput(false);
             setTitle(title === "" ? boardId : title);
-
+            
+            {/*Board Name 수정 기능 -> 미해결*/}
           /* setToDos(allBoards => {
                 const boardList = Object.keys(allBoards);
                 console.log(boardList);

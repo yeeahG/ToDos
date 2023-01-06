@@ -1,12 +1,12 @@
+import { useEffect, useState } from "react";
 import { DragDropContext, Droppable, Draggable, DropResult } from "react-beautiful-dnd";
 import { useRecoilState, useRecoilValue } from "recoil";
-import styled from "styled-components";
+import { saveTodos } from "./components/Model/localAtoms";
 import { toDoState } from "./components/Model/atoms";
 import DragCard from "./components/Card/DragCard";
 import Board from "./components/Board/Board";
-import { useEffect, useState } from "react";
-import { saveTodos } from "./components/Model/localAtoms";
 import AddBoard from "./components/Board/AddBoard";
+import styled from "styled-components";
 
 const BigBox = styled.div`
   width: 100%;
@@ -77,8 +77,8 @@ function App() {
           const todoCopy = [...allBoards[source.droppableId]];
           const todoObj = todoCopy[source.index];
 
-          todoCopy.splice(source.index, 1); //delete item
-          todoCopy.splice(destination?.index, 0, todoObj ) //item 돌려놓기
+          todoCopy.splice(source.index, 1);
+          todoCopy.splice(destination?.index, 0, todoObj )
             return {
               ...allBoards, 
               [source.droppableId]: todoCopy,
