@@ -12,7 +12,7 @@ Board = Column
 - Board간 자유로운 순서 정렬   
 
 ## 기술스택  
-React.js, Typescript, Recoil, styled-components, AWS S3  
+React.js, Typescript, Recoil, react-hook-form, styled-components, AWS S3  
 
 ## 🖥️  
 👉[사이트](http://writemytodo.s3-website.ap-northeast-2.amazonaws.com/)  
@@ -32,12 +32,21 @@ Todo list와 Column 이동을 위하여 사용하였습니다.
 ```
 React의 상태관리를 위해 사용하였습니다.
 ```  
+- react-hook-form
+```
+register 함수를 사용해 조금 더 단순한 상태관리를 위해 사용하였습니다. (Todo 추가기능)
+```
+- clsx
+```
+State에 따른 컴포넌트 숨김, 나타냄을 위해 사용하였습니다. 
+```
 
 
 ## 실행방법  
 ```npm i @types/styled-components
 npm install recoil
-npm start
+npm install react-hook-form
+npm i clsx
 npm start
 ```
 
